@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>OS CPU SCHEDULING ALGORITHM VISUALISER</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="assets/css/radio_button.css">
+    <link rel="stylesheet" href="assets/css/table.css">
+    <link rel="stylesheet" href="assets/css/avg.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <h2>CPU SCHEDULING ALGORITHM VISUALISER</h2>
+    </nav>
+
+
+    <form>
+        <div class="my-heading">
+            <h3 class="">Select Your CPU Algorithm</h3>
+        </div>
+
+        <div>
+            <div id="radio" class="container-radio">
+                <input class="option-input radio" type="radio" name="type" id="FCFS" onclick="radioClicked(this.id)">
+                <label for="FCFS">&nbsp;FCFS (First Come First Serve)</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="SJF" onclick="radioClicked(this.id)">
+                <label for="SJF">&nbsp;SJF (Shortest Job First)</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="RR" onclick="radioClicked(this.id)">
+                <label for="RR">&nbsp;RRS (Round Robin Algorithm) </label>
+                <br>
+                <!-- <input class="option-input radio" type="radio" name="type" id="LJF" onclick="radioClicked(this.id)">
+                <label for="LJF">&nbsp;LJF (Longest Job First)</label>
+                <br> -->
+                <input class="option-input radio" type="radio" name="type" id="PR" onclick="radioClicked(this.id)">
+                <label for="PR">&nbsp;Priority CPU Scheduling</label>
+                <br>
+                <!-- <input class="option-input radio" type="radio" name="type" id="LRTF" onclick="radioClicked(this.id)">
+                <label for="LRTF">&nbsp;LRTF (Longest Remaining Time First)</label>
+                <br> -->
+                <input class="option-input radio" type="radio" name="type" id="SRTF" onclick="radioClicked(this.id)">
+                <label for="SRTF">&nbsp;SRTF (Shortest Remaining Time First)</label>
+                <br>
+                <br>
+            </div>
+        </div>
+
+        <div class="new-input">
+            <div class="dropdown">
+                <select title="Select your CPU algorithm" name="Algorithm" id="Algorithm">
+                    <option value="" selected disabled>Select Algorithm</option>
+                    <option value="FCFS">FCFS (First Come First Serve)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="MainPage">
+
+
+            <br><br>
+
+            <div class="InputFolder">
+                <strong>Enter Arrival Time:</strong>
+                <span><input type="number" min="0" id="AT" placeholder="Enter Arrival Time" style="height: 30px;
+                    background-color: white; color: black; border: 2px solid
+                    black;  margin-left: 255%;" class="InputFiled"></span>
+
+                <br><br>
+                <strong>Enter Burst Time: &nbsp</strong>
+                <span><input type="number" min="0" id="BT" placeholder="Enter Burst Time" style="height: 30px;
+                    background-color: white; color: black; border: 2px solid
+                    black;margin-left: 255%;" class="InputFiled" ></span>
+
+                <br><br>
+                <strong>Enter Time Quanta (For RR): &nbsp</strong>
+                <span><input type="number" min="0" id="TQ" placeholder="Enter Time Quanta" style="height: 30px;
+                         background-color: white; color: black; border: 2px solid black; margin-left: 300%;" class="InputFiled"></span>
+            </div>
+            <br><br>
+        </div>
+    </form>
+    <div style="height:10px; ">
+
+    </div>
+    <table id="table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th colspan="9" style="width: 100%; text-align: center;font-size:larger">CPU SCHEDULING TABLE
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="PI" style="width:12%; color:blue">Process ID</td>
+                <td style="width: 12%; color:green">ArrivalTime</td>
+                <td style="width: 12%; color:red">Burst Time</td>
+                <td id="pcol" style="width: 10%; color:brown">Priority</td>
+                <td id="RS" style="width: 16%; color:chocolate">Response Time</td>
+                <td style="width: 10%; color:green">TAT</td>
+                <td style="width: 10%; color:crimson">CT</td>
+                <td style="width: 12%; color:red">Waiting Time</td>
+                <td id="color-code" style="width:6%; color:darkblue">Indicator</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+
+    <div class="btnGang">
+        <button type="button" id="add" class="btn btn-primary" onclick="addRow()">Add Task</button>
+        <button type="button" id="delete" class="btn btn-danger" onclick="deleteRow()">Delete Task</button>
+        <button type="button" class="btn btn-success" id="execute" onclick="calculate()">Visualized</button>
+        <div class="avg-text" id="average" style="color:green">Avg. Completion Time = <input class="ans-avg" type="text" id="averagebox1" placeholder="0" readonly style="border-radius: 10px;"></div>
+        <br><br>
+
+        <div class="avg-text" id="average" style="color:red">Avg. Turn Around Time = <input class="ans-avg" type="text" id="averagebox2" placeholder="0" readonly style="border-radius: 10px;"> </div>
+        <br><br>
+    </div>
+    <br>
+
+    <div class="visulizedChart">
+        <p>Visualized Graph & CPU Table</p>
+    </div>
+
+    <br>
+
+    <div id="animator" style="display: block; position: relative;">
+        <span id="cover" style="display: block; position: absolute; margin:
+            0; top: 0; left: 2px; width: 100%; height: 100px;
+            background-color: whitesmoke; z-index: 8;">
+    </span>
+        <table id="mytb" style="display: inline; position: absolute; top:
+            2px; left: 2px;">
+            <tr id="processr"></tr>
+            <tr id="timer"></tr>
+        </table>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <div id="graph-container" style="padding: 50px;">
+        <center>
+            <canvas id="myChart" width="800" height="650" style="background-color: lightblue;"></canvas>
+        </center>
+    </div>
+    <footer id="about" class="footer mt-auto py-3">
+		<div class="container text-center">
+			<span class="text-muted">Chirag Aggarwal</span>
+			<div class="social-icons mt-2">
+				<a href="https://www.linkedin.com/in/chirag-aggarwal-65ba9b220/" target="_blank" class="mr-3">
+					<i class="fab fa-linkedin"></i>
+				</a>
+				<a href="https://github.com/chirag-aggarwal-7138" target="_blank" class="mr-3">
+					<i class="fab fa-github"></i>
+				</a>
+				<a href="https://twitter.com/ChiragAggarwa_l" target="_blank">
+					<i class="fab fa-twitter"></i>
+				</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+<script src="assets/js/canvasjs.min.js"></script>
+<script src="assets/js/os.js" defer></script>
+<script src="assets/js/animation.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="assets/js/Chart.min.js" defer></script>
+
+</html>
