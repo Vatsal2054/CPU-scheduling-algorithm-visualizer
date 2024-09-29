@@ -22,11 +22,8 @@
 
 
     <form>
-        <div class="my-heading">
-            <h3 class="">Select Your CPU Algorithm</h3>
-        </div>
-
-        <div>
+        
+        <!-- <div>
             <div id="radio" class="container-radio">
                 <input class="option-input radio" type="radio" name="type" id="FCFS" onclick="radioClicked(this.id)">
                 <label for="FCFS">&nbsp;FCFS (First Come First Serve)</label>
@@ -37,59 +34,66 @@
                 <input class="option-input radio" type="radio" name="type" id="RR" onclick="radioClicked(this.id)">
                 <label for="RR">&nbsp;RRS (Round Robin Algorithm) </label>
                 <br>
-                <!-- <input class="option-input radio" type="radio" name="type" id="LJF" onclick="radioClicked(this.id)">
+                <input class="option-input radio" type="radio" name="type" id="LJF" onclick="radioClicked(this.id)">
                 <label for="LJF">&nbsp;LJF (Longest Job First)</label>
-                <br> -->
+                <br>
                 <input class="option-input radio" type="radio" name="type" id="PR" onclick="radioClicked(this.id)">
                 <label for="PR">&nbsp;Priority CPU Scheduling</label>
                 <br>
-                <!-- <input class="option-input radio" type="radio" name="type" id="LRTF" onclick="radioClicked(this.id)">
+                <input class="option-input radio" type="radio" name="type" id="LRTF" onclick="radioClicked(this.id)">
                 <label for="LRTF">&nbsp;LRTF (Longest Remaining Time First)</label>
-                <br> -->
+                <br>
                 <input class="option-input radio" type="radio" name="type" id="SRTF" onclick="radioClicked(this.id)">
                 <label for="SRTF">&nbsp;SRTF (Shortest Remaining Time First)</label>
                 <br>
                 <br>
             </div>
-        </div>
-
-        <div class="new-input">
-            <div class="dropdown">
-                <select title="Select your CPU algorithm" name="Algorithm" id="Algorithm">
-                    <option value="" selected disabled>Select Algorithm</option>
-                    <option value="FCFS">FCFS (First Come First Serve)</option>
-                </select>
+        </div> -->
+        <div class="form-entry">
+            <div class="form-heading">
+                <h3>Select Your CPU Algorithm</h3>
             </div>
-        </div>
-
-        <div class="MainPage">
-
-
-            <br><br>
-
-            <div class="InputFolder">
-                <strong>Enter Arrival Time:</strong>
-                <span><input type="number" min="0" id="AT" placeholder="Enter Arrival Time" style="height: 30px;
-                    background-color: white; color: black; border: 2px solid
-                    black;  margin-left: 255%;" class="InputFiled"></span>
-
-                <br><br>
-                <strong>Enter Burst Time: &nbsp</strong>
-                <span><input type="number" min="0" id="BT" placeholder="Enter Burst Time" style="height: 30px;
-                    background-color: white; color: black; border: 2px solid
-                    black;margin-left: 255%;" class="InputFiled" ></span>
-
-                <br><br>
-                <strong>Enter Time Quanta (For RR): &nbsp</strong>
-                <span><input type="number" min="0" id="TQ" placeholder="Enter Time Quanta" style="height: 30px;
-                         background-color: white; color: black; border: 2px solid black; margin-left: 300%;" class="InputFiled"></span>
+            
+            <div class="algorithm-input">
+                <div class="dropdown">
+                    <select title="Select your CPU algorithm" name="Algorithm" id="Algorithm" onchange="radioClicked(this.value)">
+                        <option value="" selected disabled>Select Algorithm</option>
+                        <option value="FCFS">FCFS (First Come First Serve)</option>
+                        <option value="SJF">SJF (Shortest Job First)</option>
+                        <option value="RR">RRS (Round Robin Algorithm)</option>
+                        <option value="PR">Priority CPU Scheduling</option>
+                        <option value="SRTF">SRTF (Shortest Remaining Time First)</option>
+                    </select>
+                </div>
             </div>
-            <br><br>
+
+            <div class="MainPage">
+                <div class="InputFolder">
+                    <div class="input-section">
+                        <strong>Enter Arrival Time:</strong>
+                        <span><input type="number" min="0" id="AT" placeholder="Enter Arrival Time" class="inputField"></span>
+                    </div>
+                    <div class="input-section">
+                        <strong>Enter Burst Time: &nbsp</strong>
+                        <span><input type="number" min="0" id="BT" placeholder="Enter Burst Time" onkeydown="addEntry(event)" class="inputField"></span>
+                    </div>
+                    <div id="timequanta" class="input-section">
+                        <strong>Enter Time Quanta (For RR): &nbsp</strong>
+                        <span><input type="number" min="0" id="TQ" placeholder="Enter Time Quanta" onkeydown="addEntry(event)" class="inputField"></span>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button type="button" id="add" class="btn btn-primary" onclick="addRow()">Add Task</button>
+                    <button type="button" id="delete" class="btn btn-danger" onclick="deleteRow()">Delete Task</button>
+                    <button type="button" class="btn btn-success" id="execute" onclick="calculate()">Visualized</button>
+                </div>
+            </div>
         </div>
     </form>
-    <div style="height:10px; ">
 
-    </div>
+    <!-- <div style="height:10px; ">
+
+    </div> -->
     <table id="table" style="width: 100%;">
         <thead>
             <tr>
@@ -114,9 +118,6 @@
     <br><br>
 
     <div class="btnGang">
-        <button type="button" id="add" class="btn btn-primary" onclick="addRow()">Add Task</button>
-        <button type="button" id="delete" class="btn btn-danger" onclick="deleteRow()">Delete Task</button>
-        <button type="button" class="btn btn-success" id="execute" onclick="calculate()">Visualized</button>
         <div class="avg-text" id="average" style="color:green">Avg. Completion Time = <input class="ans-avg" type="text" id="averagebox1" placeholder="0" readonly style="border-radius: 10px;"></div>
         <br><br>
 
@@ -151,7 +152,7 @@
             <canvas id="myChart" width="800" height="650" style="background-color: lightblue;"></canvas>
         </center>
     </div>
-    <footer id="about" class="footer mt-auto py-3">
+    <!-- <footer id="about" class="footer mt-auto py-3">
 		<div class="container text-center">
 			<span class="text-muted">Chirag Aggarwal</span>
 			<div class="social-icons mt-2">
@@ -166,7 +167,7 @@
 				</a>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 
 </body>
 <script src="assets/js/canvasjs.min.js"></script>

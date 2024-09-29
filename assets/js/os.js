@@ -2,17 +2,21 @@ let rows = 2;
 document.getElementById("cover").hidden = false;
 document.getElementById("mytb").hidden = false;
 let table = document.getElementById("table");
+let selectedAlgorithm;
 
 function radioClicked(e) {
-    if (e == "RR") {
-        document.getElementById("timetext").innerHTML = 'Enter Time Quanta';
-        document.getElementById("TQ").placeholder = 'Enter Time Quanta';
+    console.log("Algorithm selected");
+    clearTable();
+    
+    if (e === "RR") {
+        // document.getElementById("timetext").innerHTML = 'Enter Time Quanta';
+        // document.getElementById("TQ").placeholder = 'Enter Time Quanta';
         document.getElementById("timequanta").style.display = 'block';
         var pl = document.getElementsByClassName("priority-input");
         for (i = 0; i < pl.length; i++) {
             pl[i].disabled = true;
         }
-    } else if (e == "PR") {
+    } else if (e === "PR") {
         document.getElementById("timequanta").style.display = 'none';
         var pl = document.getElementsByClassName("priority-input");
         for (i = 0; i < pl.length; i++) {
@@ -25,6 +29,38 @@ function radioClicked(e) {
             pl[i].disabled = true;
         }
     }
+    selectedAlgorithm = e;
+}
+
+function addEntry(e){
+    // console.log("Key pressed");
+    if (e.key === "Enter") {
+        addRow();
+    }
+}
+
+function clearTable() {
+    // Get the number of rows in the table
+    let rowCount = table.rows.length;
+
+    // Loop through the table rows and delete them, except for the header row
+    for (let i = rowCount - 1; i > 1; i--) {
+        table.deleteRow(i);
+    }
+
+    // Reset the rows counter to its initial value
+    rows = 2;
+
+    // Optionally, clear any other related data or reset UI elements
+    document.getElementById("BT").value = "";
+    document.getElementById("AT").value = "";
+    document.getElementById("TQ").value = "";
+    document.getElementById("averagebox1").value = "0";
+    document.getElementById("averagebox2").value = "0";
+    document.getElementById("processr").innerHTML = "";
+    document.getElementById("timer").innerHTML = "";
+    document.getElementById("cover").style.left = "0";
+    document.getElementById("cover").style.width = "100%";
 }
 
 function addRow() {
@@ -215,7 +251,7 @@ function calculate() {
     document.getElementById("timer").innerHTML = "";
     
     //SJF
-    if (document.getElementById("SJF").checked) {
+    if (selectedAlgorithm === "SJF") {
         let time = 0;
         let check_pro = [];
         for (i = 1; i <= processes; i++) {
@@ -289,7 +325,7 @@ function calculate() {
     }
 
     //FCFS
-    else if (document.getElementById("FCFS").checked) {
+    else if (selectedAlgorithm === "FCFS") {
         let time = 0;
         if (table.rows[2].cells[1].innerHTML == "0") {
             table.rows[2].cells[4].innerHTML = "0";
@@ -354,7 +390,7 @@ function calculate() {
     }
 
     //RR algorithm
-    else if (document.getElementById("RR").checked) {
+    else if (selectedAlgorithm === "RR"){
         var TQ = document.getElementById("TQ").value;
         if (TQ == "") {
             alert("Enter time quanta value!");
@@ -453,7 +489,7 @@ function calculate() {
     }
 
     //LJF
-    else if (document.getElementById("LJF").checked) {
+    else if (selectedAlgorithm === "LJF") {
         let time = 0;
         let check_pro = [];
         for (i = 1; i <= processes; i++) {
@@ -527,7 +563,7 @@ function calculate() {
     }
 
     //LRTF
-    else if (document.getElementById("LRTF").checked) {
+    else if (selectedAlgorithm === "LRTF") {
         let time = 0;
         let check_pro = [];
         let pr = document.getElementById("processr");
@@ -603,7 +639,7 @@ function calculate() {
     }
 
     //SRTF
-    else if (document.getElementById("SRTF").checked) {
+    else if (selectedAlgorithm === "SRTF")  {
         let time = 0;
         let check_pro = [];
         let pr = document.getElementById("processr");
@@ -697,7 +733,7 @@ function calculate() {
     }
 
     //Priority
-    else if (document.getElementById("PR").checked) {
+    else if (selectedAlgorithm === "PR"){
         let time = 0;
         let check_pro = [];
         for (i = 1; i <= processes; i++) {
