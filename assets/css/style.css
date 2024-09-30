@@ -2,6 +2,7 @@ body {
     background-color: whitesmoke;
     color: black;
     margin: 0px;
+    overflow-x: hidden;
 }
 
 #radio {
@@ -14,6 +15,7 @@ body {
 
 form {
     font-size: large;
+    /* color: rgb(42, 255, 39); */
 }
 
 /* span {
